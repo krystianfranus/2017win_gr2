@@ -14,5 +14,25 @@
 #After you finish, be sure to UPLOAD this (add, commit, push) to the remote repository.
 #Good Luck
 
+import numpy as np
+import time
+
+
+mu, sigma = 0, 1
+
+orientation = np.random.uniform(-30, 30)
+print "Orientation at the beginning: " + str(orientation)
+
+while True:
+	time.sleep(0.2)
+	turbulation = np.random.normal(mu, sigma)
+	orientation = orientation + turbulation
+	if orientation > 0:
+		orientation = orientation - 0.5
+	else:
+		orientation = orientation + 0.5
+
+	print orientation
+
 
 
