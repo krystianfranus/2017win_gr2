@@ -17,22 +17,31 @@
 import numpy as np
 import time
 
+class Plane:
+	def __init__(self, sleep_time, boundary, correction, **gauss_parameters):
+		self.mu = gauss_parameters['mu']
+		self.sigma = gauss_parameters['sigma']
+		self.sleep_time = sleep_time
+		self.correction = correction
+	
+		self.orientation = np.random.uniform(-boundary, boundary)
 
-mu, sigma = 0, 1
+	def fly(self):
+		while True:
+			time.sleep(self.sleep_time)
+			turbulation = np.random.normal(self.mu, self.sigma)
+			self.orientation += turbulation
+			self.orientation = self.orientation - self.correction if self.orientation > 0 else self.orientation + self.correction
+			
+			print(self)
 
-orientation = np.random.uniform(-30, 30)
-print "Orientation at the beginning: " + str(orientation)
+	def __str__(self):
+		return str(self.orientation)
 
-while True:
-	time.sleep(0.2)
-	turbulation = np.random.normal(mu, sigma)
-	orientation = orientation + turbulation
-	if orientation > 0:
-		orientation = orientation - 0.5
-	else:
-		orientation = orientation + 0.5
-
-	print orientation
+if __name__ == "__main__":
+	plane = Plane(sleep_time=0.2, boundary=30, correction=0.5, mu=0, sigma=1)
+	print "Orientation at the beginning: %s" % (plane)
+	plane.fly()
 
 
 
