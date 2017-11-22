@@ -2,9 +2,14 @@ import numpy as np
 import time
 
 from threading import Thread
+from abc import ABCMeta, abstractmethod
 
 
-class Plane(Thread):
+class Transport(Thread):
+
+	__metaclass__ = ABCMeta
+
+	@abstractmethod
 	def __init__(self, name, delay, boundary, **gauss_parameters):
 		Thread.__init__(self)
 		self.name = name
@@ -14,6 +19,11 @@ class Plane(Thread):
 	
 		self.orientation = np.random.uniform(-boundary, boundary)
 
+
+class Plane(Transport):
+	def __init__(self, name, delay, boundary, **gauss_parameters):
+		Transport.__init__(self, name, delay, boundary, **gauss_parameters)
+		
 	def run(self):
 		print 'Launched %s - orientation: %f' % (self.name, self.orientation)
 		self.fly()
