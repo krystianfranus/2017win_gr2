@@ -1,4 +1,3 @@
-###Flight simulator. 
 #Write a code in python that simulates the tilt correction of the plane (angle between plane wings and earth). 
 ##The program should:
 # - print out current orientation
@@ -14,34 +13,16 @@
 #After you finish, be sure to UPLOAD this (add, commit, push) to the remote repository.
 #Good Luck
 
-import numpy as np
-import time
+from transport import Plane
 
-class Plane:
-	def __init__(self, sleep_time, boundary, correction, **gauss_parameters):
-		self.mu = gauss_parameters['mu']
-		self.sigma = gauss_parameters['sigma']
-		self.sleep_time = sleep_time
-		self.correction = correction
-	
-		self.orientation = np.random.uniform(-boundary, boundary)
-
-	def fly(self):
-		while True:
-			time.sleep(self.sleep_time)
-			turbulation = np.random.normal(self.mu, self.sigma)
-			self.orientation += turbulation
-			self.orientation = self.orientation - self.correction if self.orientation > 0 else self.orientation + self.correction
-			
-			print(self)
-
-	def __str__(self):
-		return str(self.orientation)
 
 if __name__ == "__main__":
-	plane = Plane(sleep_time=0.2, boundary=30, correction=0.5, mu=0, sigma=1)
-	print "Orientation at the beginning: %s" % (plane)
-	plane.fly()
+
+	no_plane = 10
+
+	for i in range(1, no_plane+1):
+		plane = Plane(name='Plane'+str(i), delay=0.3, boundary=45, mu=0, sigma=1)
+		plane.start()
 
 
 
